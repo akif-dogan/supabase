@@ -25,9 +25,8 @@ services:
       timeout: 10s
       interval: 5s
       retries: 3
-    depends_on:
-      analytics:
-        condition: service_healthy
+    depends_on: {}
+    # analytics dep removed for marsai-dev V1 (analytics service is profile-disabled)
     environment:
       #  Listen on all IPv4 interfaces
       HOSTNAME: "0.0.0.0"
@@ -468,6 +467,7 @@ services:
   analytics:
     container_name: supabase-analytics
     image: supabase/logflare:1.36.1
+    profiles: ["analytics"]   # disabled by default for marsai-dev V1 (Logflare init issues with self-host)
     restart: unless-stopped
     # ports:
     #   - 4000:4000
